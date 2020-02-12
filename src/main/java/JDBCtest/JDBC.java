@@ -1,5 +1,3 @@
-
-
 package JDBCtest;
 
 import java.sql.*;
@@ -36,12 +34,24 @@ public class JDBC {
             while (set1.next()) {
                 System.out.println(set1.getString(1));
             }
-            String userId = "1";
+            // работа с SQL Injection
+            String userId = "1' or 1 = '1"; // данная иньекция выведет всех пользователей таблицы
             ResultSet set2 = statement.executeQuery("select * from table2 where user_id = '" +userId +"'");
+            System.out.println("SQL Injection");
             while (set2.next()) {
                 System.out.println("phone_id: " + set2.getInt( "phone_id"));
-                System.out.println("pfone_number: " + set2.getInt("phone_number"));
-
+                System.out.println("phone_number: " + set2.getInt("phone_number"));
+            }
+//use SQL Prepared Statement используя их мы получаем защиту от SQL injection в отличии от простого стейтмана
+           // String userId2 = "2";//                можно забить тут where user_id = ? and phone_number = ?
+            PreparedStatement preparedStatement = conn.prepareStatement("select * from table2 where user_id = ?");
+                preparedStatement.setString(1, userId);
+//     String userId3 = "200"         preparedStatement.setString(2, userId3);
+                ResultSet set3 = preparedStatement.executeQuery();
+            System.out.println("Prepared Statement");
+            while (set3.next()) {
+                System.out.println("phone_id: " + set3.getInt( "phone_id"));
+                System.out.println("phone_number: " + set3.getInt("phone_number"));
             }
         }
 
