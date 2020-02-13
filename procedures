@@ -1,0 +1,11 @@
+#create procedure getCars(OUT name_car varchar(30))
+#BEGIN
+#  select * FROM carsblob where name_cars = name_car;
+#END;
+
+#create procedure CarsCount(OUT cnt int)
+#BEGIN
+#  select count(*) into cnt from carsblob;
+#END;
+
+
