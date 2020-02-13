@@ -8,4 +8,11 @@
 #  select count(*) into cnt from carsblob;
 #END;
 
+create procedure getCount()
+BEGIN
+  select count(*)  from cars2;
+  select count(*)  from carsblob;
+END;
+
+
 

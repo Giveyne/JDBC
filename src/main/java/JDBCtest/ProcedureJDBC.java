@@ -1,5 +1,6 @@
 package JDBCtest;
 
+import java.lang.reflect.Type;
 import java.sql.*;
 import java.lang.*;
 
@@ -30,6 +31,18 @@ public class ProcedureJDBC {
                 }
 
             }
+            // множественные процедуры
+            CallableStatement callableStatement2 = conn.prepareCall("{call getCount()}");
+            boolean hasresult = callableStatement2.execute();
+            while (hasresult){
+                ResultSet resultSet = callableStatement2.getResultSet();
+                while (resultSet.next()){
+                    System.out.println(resultSet.getInt(1));
+                }
+                hasresult = callableStatement2.getMoreResults();
+
+            }
+
 
         }
     }
