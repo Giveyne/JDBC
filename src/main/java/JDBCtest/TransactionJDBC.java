@@ -20,11 +20,12 @@ public class TransactionJDBC {
             stat.executeUpdate("create table if not exists carsDate (id int(5) not null AUTO_INCREMENT, name_cars VARCHAR(30), dt DATE, primary key (id));");
 
             stat.executeUpdate("insert into carsDate (name_cars, dt) values ('Ferrari', '2020-02-13')");
+
             conn.rollback();// отменить все изменения т.е insert и update set (таблица создасться)
-         //Savepoint savepoint = conn.setSavepoint(); установить сейвпоинт в любом месте транзакции
+            //Savepoint savepoint = conn.setSavepoint(); установить сейвпоинт в любом месте транзакции
          //conn.rollback(savepoint); откатить до сейвпоинта
          // удобно их делать в catch чтобы если вылетела SQLException можно было откатить транзакции
-
+            conn.commit();// отправить изменения в базу общей транзакцией
 // еще есть батч создать вначале общий хтмл запрос а потом разом его отправить
             stat.addBatch("insert into carsDate");
             stat.addBatch("update into carDate set name ");
